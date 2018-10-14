@@ -10,7 +10,10 @@ if (!username || !password) {
 
 const loggedCheck = async (page) => {
   try {
-    await page.waitForXPath('//h3[contains(., "Log In With One Tap")]', { timeout: 5000 });
+    await page.waitForXPath(
+      '//h3[contains(translate(., "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz"), "log in with one tap")]',
+      { timeout: 10000 }
+    );
     return true;
   } catch(err) {
     return false;
@@ -43,7 +46,7 @@ async function asyncForEach(array, callback) {
     await page.click('#u_0_5');
     
     // Checking if username and password were correct
-    const isLoggedIn = await loggedCheck(page)
+    const isLoggedIn = await loggedCheck(page);
     if (!isLoggedIn) {
       throw new Error('Username or password are incorrect')
     }
